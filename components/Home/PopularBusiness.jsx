@@ -2,7 +2,7 @@ import { View, Text, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
 import { collection, getDocs, limit, query } from 'firebase/firestore'
-import { db } from '../../configs/FirebaseConfig'
+import { db } from '../../configs/firebaseConfig'
 import PopularBusinessCard from './PopularBusinessCard'
 
 export default function PopularBusiness() {

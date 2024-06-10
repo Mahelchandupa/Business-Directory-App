@@ -41,14 +41,14 @@ export default function PopularBusinessCard({ business }) {
                     <View style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        gap: 5
+                        gap: 5,
+                        marginTop: 5
                     }}>
                         <Image
                             source={require('./../../assets/images/star.png')}
                             style={{
                                 width: 15,
                                 height: 15,
-                                marginTop: 5
                             }}
                         />
                         <Text style={{ fontFamily: 'outfit' }}>4.5</Text>

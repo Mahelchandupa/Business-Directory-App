@@ -2,7 +2,7 @@ import { View, Text, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
 import { collection, getDocs, query } from 'firebase/firestore'
-import { db } from '../../configs/FirebaseConfig'
+import { db } from '../../configs/firebaseConfig'
 import CategoryItem from './CategoryItem'
 
 export default function() {
