@@ -1,4 +1,4 @@
-import { View, FlatList, Text } from 'react-native'
+import { View, FlatList, Text, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -12,6 +12,7 @@ export default function BusinessListByCategory() {
     const { category } = useLocalSearchParams()
 
     const [bussinessList, setBussinessList] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         navigation.setOptions({
@@ -22,6 +23,7 @@ export default function BusinessListByCategory() {
     }, [])
 
     const getBussinessList = async () => {
+        setLoading(true)
         const q = query(collection(db, 'BusinessList'), where('category', '==', category))
         const querySnapshot = await getDocs(q)
 
@@ -29,19 +31,22 @@ export default function BusinessListByCategory() {
             console.log(doc.data())
             setBussinessList(prev => [...prev, doc.data()])
         })
+        setLoading(false)
     }
 
     return (
         <View>
             {
-                bussinessList.length > 0 ?
+                bussinessList.length > 0 && loading === false ?
 
                     <FlatList
                         data={bussinessList}
+                        onRefresh={getBussinessList}
+                        refreshing={loading}
                         renderItem={(item, index) => (
                             <BusinessListCard business={item} key={index} />
                         )}
-                    /> :
+                    /> : loading ? <ActivityIndicator style={{ marginTop: '60%' }} size={'large'} color={Colors.PRIMARY} /> :
                     <Text style={{ 
                         textAlign: 'center',
                         marginTop: '50%',
