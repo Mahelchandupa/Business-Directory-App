@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, TouchableOpacity, Linking } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity, Linking, Share } from 'react-native'
 import React from 'react'
 
 export default function ActionButton({ business }) {
@@ -26,13 +26,16 @@ export default function ActionButton({ business }) {
         id: 4,
         name: 'Share',
         icon: require('./../../assets/images/share.png'),
-        url: `https://wa.me/?text=${business?.name} - ${business?.address}`
+        url: business?.website
     }
   ]
 
   const onPrssHandler = (item) => {
-    if (item?.name === 'share') {
-        return ;
+    if (item?.name === 'Share') {
+      Share.share({
+        message: business?.name+"\nAddress: "+business?.address+"\nContact: "+business?.contact
+      })
+      return ;
     }
     Linking.openURL(item.url)
   }
