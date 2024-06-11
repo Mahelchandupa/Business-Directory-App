@@ -7,6 +7,8 @@ import { Colors } from '../../constants/Colors'
 import Intro from '../../components/BusinessDetail/Intro'
 import ActionButton from '../../components/BusinessDetail/ActionButton'
 import About from '../../components/BusinessDetail/About'
+import Reviews from '../../components/BusinessDetail/Review'
+import { Rating } from 'react-native-ratings'
 
 export default function BusinessDetail() {
 
@@ -26,7 +28,7 @@ export default function BusinessDetail() {
 
         if (docSnap.exists()) {
             console.log(docSnap.data())
-            setBusinessDetail(docSnap.data())
+            setBusinessDetail({ id:docSnap?.id, ...docSnap.data()})
             setLoading(false)
         } else {
             console.log('No such document!')
@@ -43,9 +45,11 @@ export default function BusinessDetail() {
                         {/* Intro */}
                         <Intro business={businessDetail} />
                         {/* Action Button */}
-                        <ActionButton business={businessDetail}/>
+                        <ActionButton business={businessDetail} />
                         {/* About Section */}
-                        <About business={businessDetail}/>
+                        <About business={businessDetail} />
+                        {/* Review Section */}
+                        <Reviews business={businessDetail} />
                     </View>
             }
         </ScrollView>

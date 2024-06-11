@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function About({ business }) {
   return (
-    <View style={{ padding: 20, backgroundColor: '#fff', height: '100%' }}>
+    <View style={{ padding: 20, backgroundColor: '#fff'}}>
       <Text style={{ fontFamily: 'outfit-bold', fontSize: 20 }}>About</Text>
       <Text style={{ fontFamily: 'outfit', lineHeight: 25, textAlign: 'justify' }}>
         {business?.about}
