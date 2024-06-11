@@ -28,8 +28,7 @@ export default function BusinessListByCategory() {
         const querySnapshot = await getDocs(q)
 
         querySnapshot.forEach((doc) => {
-            console.log(doc.data())
-            setBussinessList(prev => [...prev, doc.data()])
+            setBussinessList(prev => [...prev, {id: doc?.id, ...doc.data()}])
         })
         setLoading(false)
     }
