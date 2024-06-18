@@ -11,6 +11,7 @@ import ExploreBusinessList from '../../components/Explore/ExploreBusinessList'
 export default function explore() {
 
   const [businessList, setBusinessList] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   const getBusinessByCategory = async (category) => {
     setBusinessList([]) 
@@ -22,6 +23,29 @@ export default function explore() {
       })
   }
 
+  const handleSearch = async (userSearch) => {
+     console.log('call handle search')
+     setSearchQuery(userSearch)
+     if (userSearch.length > 2) {
+       console.log(`call inside`)
+       const searchResult = await searchBusiness(userSearch)
+       setBusinessList(searchResult)
+     } else {
+        setBusinessList([])
+     }
+  }
+
+  const searchBusiness = async (userSearch) => {
+     const q = query(collection(db, "BusinessList"), where("name", ">=", userSearch), where("name", "<=", userSearch + '\uf8ff'))
+      const querySnapshot = await getDocs(q)
+      const result = []
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data())
+        result.push({id: doc.id, ...doc.data()})
+      })
+      return result
+  }
+
   return (
     <View style={{
       padding: 20,
@@ -31,7 +55,7 @@ export default function explore() {
       {/* Search Bar */}
       <View style={styles.searchBar}>
                 <Ionicons name="search" size={24} color={Colors.PRIMARY} />
-                <TextInput placeholder='Search...' style={{ fontFamily: 'outfit', fontSize: 16 }}></TextInput>
+                <TextInput onChangeText={handleSearch} value={searchQuery} placeholder='Search...' style={{ fontFamily: 'outfit', fontSize: 16 }}></TextInput>
       </View>
       {/* Category */}
       <Category explore={true} onCategorySelect={(category) => getBusinessByCategory(category) }/>
